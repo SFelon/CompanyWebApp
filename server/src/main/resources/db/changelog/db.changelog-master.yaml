@@ -1,0 +1,184 @@
+databaseChangeLog:
+- changeSet:
+      id: 7
+      author: sfelon
+      changes:
+      - createTable:
+            tableName: users
+            columns:
+            - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+            - column:
+                  name: first_name
+                  type: varchar(25)
+                  constraints:
+                      nullable: false
+            - column:
+                  name: last_name
+                  type: varchar(35)
+                  constraints:
+                      nullable: false
+            - column:
+                  name: username
+                  type: varchar(15)
+                  constraints:
+                      nullable: false
+                      unique: true
+                      uniqueConstraintName: uk_users_username
+            - column:
+                  name: email
+                  type: varchar(40)
+                  constraints:
+                      nullable: false
+                      unique: true
+                      uniqueConstraintName: uk_users_email
+            - column:
+                  name: password
+                  type: varchar(75)
+                  constraints:
+                      nullable: false
+            - column:
+                  name: private_phone
+                  type: varchar(16)
+            - column:
+                  name: business_phone
+                  type: varchar(16)
+            - column:
+                  name: salary
+                  type: numeric(6,2)
+            - column:
+                  name: date_of_employment
+                  type: timestamp with time zone
+            - column:
+                  name: is_account_active
+                  type: boolean
+            - column:
+                  name: last_logged
+                  type: timestamp with time zone
+            - column:
+                  name: department_id
+                  type: bigserial
+                  constraints:
+                      nullable: false
+
+      - createTable:
+            tableName: roles
+            columns:
+            - column:
+                name: id
+                type: bigserial
+                autoIncrement: true
+                constraints:
+                      primaryKey: true
+                      nullable: false
+            - column:
+                name: name
+                type: varchar(30)
+                constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uk_roles_name
+
+      - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+      - createTable:
+          tableName: departments
+          columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: department_name
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: head_of_department
+                  type: varchar(60)
+              - column:
+                  name: number_of_employees
+                  type: int
+              - column:
+                  name: min_salary
+                  type: numeric(6,2)
+              - column:
+                  name: max_salary
+                  type: numeric(6,2)
+
+      - addForeignKeyConstraint:
+          baseColumnNames: user_id
+          baseTableName: user_roles
+          constraintName: fk_user_roles_user_id
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableName: users
+
+      - addForeignKeyConstraint:
+          baseColumnNames: role_id
+          baseTableName: user_roles
+          constraintName: fk_user_roles_role_id
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableName: roles
+
+      - addForeignKeyConstraint:
+          baseColumnNames: department_id
+          baseTableName: users
+          constraintName: fk_users_department
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableName: departments
+
+      - insert:
+          columns:
+          - column:
+              name: name
+              value: ROLE_EMPLOYEE
+          tableName: roles
+
+      - insert:
+          columns:
+          - column:
+              name: name
+              value: ROLE_HEAD
+          tableName: roles
+
+      - insert:
+          columns:
+          - column:
+              name: name
+              value: ROLE_CEO
+          tableName: roles
+
+
+
