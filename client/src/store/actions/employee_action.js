@@ -60,7 +60,7 @@ export function getEmployeeListByDepartment(id) {
         message: 'Company App',
         description: error.message || 'Sorry! Could not load the employees list!',
       });
-      dispatch(loadingIndicator(false));
+      dispatch(_employeesList([]));
     });
   };
 }
@@ -82,7 +82,7 @@ export function getAllEmployeeList() {
         message: 'Company App',
         description: error.message || 'Sorry! Could not load the employees list!',
       });
-      dispatch(loadingIndicator(false));
+      dispatch(_employeesList([]));
     });
   };
 }

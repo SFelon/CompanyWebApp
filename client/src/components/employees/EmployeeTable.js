@@ -42,14 +42,8 @@ class EmployeeTable extends React.Component {
    const employeeData = this.props.employees.find(element => element.id === id);
    this.setState({
      employeeData,
+     employeeProfileIsVisible: true,
    });
-    this.showModal();
-  };
-
-  showModal() {
-    this.setState({
-      employeeProfileIsVisible: true,
-    });
   };
 
   handleCancel = () => {

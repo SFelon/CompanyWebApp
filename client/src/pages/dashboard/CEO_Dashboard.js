@@ -13,6 +13,7 @@ class CEO_Dashboard extends Component {
   state = {
     visible: false,
     numberOfDepartments: this.props.numberOfDepartments || 0,
+    numberOfEmployees: this.props.numberOfEmployees || 0,
     departmentTable: true,
   };
 
@@ -20,6 +21,11 @@ class CEO_Dashboard extends Component {
     if (props.numberOfDepartments && props.numberOfDepartments !== state.numberOfDepartments) {
       return {
         numberOfDepartments: props.numberOfDepartments,
+      };
+    }
+    if (props.numberOfEmployees && props.numberOfEmployees !== state.numberOfEmployees) {
+      return {
+        numberOfEmployees: props.numberOfEmployees,
       };
     }
     return 0;
@@ -106,7 +112,11 @@ class CEO_Dashboard extends Component {
                   </Tooltip>,
                 ]}
             >
-              {`No of departments: ${this.state.numberOfDepartments}`}
+              {this.state.numberOfDepartments ?
+                `No of departments: ${this.state.numberOfDepartments}`
+                :
+                ``
+              }
             </Card>
             <br></br>
             <Card title={<span><Icon type='team' style={{ padding: '0 8px', fontSize: '32px'}}/> Employees</span>}
@@ -118,7 +128,11 @@ class CEO_Dashboard extends Component {
                 </Tooltip>,
               ]}
             >
-              Card content
+              {this.state.numberOfEmployees ?
+                `No of employees: ${this.state.numberOfEmployees}`
+              :
+                ``
+              }
             </Card>
           </Col>
         </Row>
@@ -138,6 +152,7 @@ class CEO_Dashboard extends Component {
 const mapStateToProps = (state) => ({
   departments: state.departments.departments,
   numberOfDepartments: state.departments.departments.length,
+  numberOfEmployees: state.employees.employees.length,
   isLoadingDepartments: state.departments.isLoadingDepartments,
   isLoadingEmployees: state.employees.isLoadingEmployees,
 });

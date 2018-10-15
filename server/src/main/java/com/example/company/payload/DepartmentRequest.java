@@ -21,6 +21,10 @@ public class DepartmentRequest {
 
     private BigDecimal maxSalary;
 
+    public DepartmentRequest() {
+
+    }
+
     public DepartmentRequest(@NotBlank @Size(min = 3, max = 40) String departmentName, @NotBlank @Size(min = 3, max = 30)
             String city, @Size(max = 60) String headOfDepartment, BigDecimal minSalary, BigDecimal maxSalary) {
         this.departmentName = departmentName;
