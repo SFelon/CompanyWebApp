@@ -69,6 +69,12 @@ class EmployeeTable extends React.Component {
       return b.localeCompare(a, 'pl', { sensitivity: 'base' });
     };
 
+    const uniqueDepartments = [...new Set( this.props.employees.map((element) => element.departmentName))];
+    const filteredValues = uniqueDepartments.map((element) => ({
+      text: element,
+      value: element,
+    }));
+
     const columns = [{
       title: 'Last Name',
       dataIndex: 'lastName',
@@ -122,10 +128,7 @@ class EmployeeTable extends React.Component {
         title: 'Department',
         dataIndex: 'departmentName',
         key: 'departmentName',
-        filters: [
-          { text: 'departmentName', value: 'depName' },
-          { text: 'xx', value: 'yy'},
-        ],
+        filters: filteredValues,
         filteredValue: filteredInfo.departmentName || null,
         onFilter: (value, record) => record.departmentName.includes(value),
         sorter: (a, b) => sortScenario(a.departmentName, b.departmentName),

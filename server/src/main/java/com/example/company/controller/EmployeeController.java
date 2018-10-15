@@ -1,5 +1,6 @@
 package com.example.company.controller;
 
+import com.example.company.payload.UserProfile;
 import com.example.company.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,12 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @GetMapping("/employees")
+    @PreAuthorize("hasAnyRole('ROLE_CEO','ROLE_HEAD')")
+    public ResponseEntity<?> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
 
     @GetMapping("/{id}/employees")
     @PreAuthorize("hasAnyRole('ROLE_CEO','ROLE_HEAD','ROLE_EMPLOYEE')")

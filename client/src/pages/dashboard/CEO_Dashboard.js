@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getDepartmentList, addDepartment } from '../../store/actions/department_action';
 import { getHeadsNames } from "../../store/actions/user_action";
-import { getEmployeeList } from "../../store/actions/employee_action";
+import { getEmployeeListByDepartment, getAllEmployeeList } from "../../store/actions/employee_action";
 import DepTable from '../../components/departments/DepTable';
 import EmployeeTable from '../../components/employees/EmployeeTable';
 import AddDepModal from '../../components/departments/AddDepModal';
@@ -66,7 +66,14 @@ class CEO_Dashboard extends Component {
   };
 
   handleEmployeesListByDepartment = (id) => {
-    this.props.getEmployeeList(id);
+    this.props.getEmployeeListByDepartment(id);
+    this.setState({
+      departmentTable: false,
+    });
+  };
+
+  getAllEmployeesList = () => {
+    this.props.getAllEmployeeList();
     this.setState({
       departmentTable: false,
     });
@@ -104,7 +111,11 @@ class CEO_Dashboard extends Component {
             <br></br>
             <Card title={<span><Icon type='team' style={{ padding: '0 8px', fontSize: '32px'}}/> Employees</span>}
               actions={[
-              <Icon type="ordered-list" />,
+                <Tooltip placement="bottomLeft" title="List All Employees">
+                  <Icon type="ordered-list"
+                        onClick={this.getAllEmployeesList}
+                  />
+                </Tooltip>,
               ]}
             >
               Card content
@@ -131,4 +142,5 @@ const mapStateToProps = (state) => ({
   isLoadingEmployees: state.employees.isLoadingEmployees,
 });
 
-export default withRouter(connect(mapStateToProps, { getDepartmentList, getHeadsNames, addDepartment, getEmployeeList })(CEO_Dashboard));
+export default withRouter(connect(mapStateToProps, { getDepartmentList, getHeadsNames, addDepartment,
+  getEmployeeListByDepartment, getAllEmployeeList })(CEO_Dashboard));

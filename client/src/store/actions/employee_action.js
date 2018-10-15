@@ -43,7 +43,7 @@ function loadingIndicator(toggle) {
 }
 
 
-export function getEmployeeList(id) {
+export function getEmployeeListByDepartment(id) {
   return (dispatch) => {
     dispatch(loadingIndicator(true));
     if (!localStorage.getItem(ACCESS_TOKEN)) {
@@ -60,6 +60,29 @@ export function getEmployeeList(id) {
         message: 'Company App',
         description: error.message || 'Sorry! Could not load the employees list!',
       });
+      dispatch(loadingIndicator(false));
+    });
+  };
+}
+
+export function getAllEmployeeList() {
+  return (dispatch) => {
+    dispatch(loadingIndicator(true));
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      dispatch(loadingIndicator(false));
+      return Promise.reject('No access token set.');
+    }
+    return request({
+      url: `${API_BASE_URL}/departments/employees`,
+      method: 'GET',
+    }).then((response) => {
+      dispatch(_employeesList(response));
+    }).catch((error) => {
+      notification.error({
+        message: 'Company App',
+        description: error.message || 'Sorry! Could not load the employees list!',
+      });
+      dispatch(loadingIndicator(false));
     });
   };
 }

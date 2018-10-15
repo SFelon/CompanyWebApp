@@ -4,6 +4,7 @@ import com.example.company.model.User;
 import com.example.company.payload.ApiResponse;
 import com.example.company.payload.UserProfile;
 import com.example.company.repository.DepartmentRepository;
+import com.example.company.repository.UserRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -29,7 +30,12 @@ public class EmployeeService {
     DepartmentRepository departmentRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
+
+
 
 
     private static String formatDateToString(Object v) {
@@ -65,6 +71,17 @@ public class EmployeeService {
         return ResponseEntity.ok(convertUserToDto(user));
     }
 
+
+    public ResponseEntity<?> getAllEmployees() {
+        List<User> users = userRepository.findAll();
+        users.removeAll(Collections.singleton(null));
+        if(CollectionUtils.isEmpty(users)) {
+            return new ResponseEntity<>(new ApiResponse(false, "There are no registered employees!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(new ArrayList<>(users.stream().map(user -> convertUserToDto(user)).collect(Collectors.toList())));
+    }
 
     public ResponseEntity<?> getEmployeesByDepartment(String id) {
         Long idLong = Long.parseLong(id);
