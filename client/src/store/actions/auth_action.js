@@ -109,3 +109,11 @@ export function logoutAction() {
     }), 500);
   };
 }
+
+
+export function checkUsernameAvailability(username) {
+  return request({
+    url: `${API_BASE_URL}/auth/checkUsernameAvailability?username=${username}`,
+    method: 'GET',
+  });
+}

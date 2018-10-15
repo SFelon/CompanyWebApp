@@ -15,26 +15,13 @@ class EmployeeProfileModal extends Component {
       return {
         visible: props.visible,
       };
-    }
-    else {
+    } else {
       return null;
     }
-  };
-
-  handleOk = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    })
-  };
+  }
 
   render() {
-    if(this.props.employeeData) {
+    if (this.props.employeeData) {
       return (
         <Modal
           title={<span><Avatar icon="smile"
@@ -50,7 +37,7 @@ class EmployeeProfileModal extends Component {
           <p>{`Email: ${this.props.employeeData.email}`}</p>
           <p>{`Business phone: ${this.props.employeeData.businessPhone}`}</p>
           <p>{`Private phone: ${this.props.employeeData.privatePhone}`}</p>
-          <p>{`Department: ${this.props.employeeData.department}`}</p>
+          <p>{`Department: ${this.props.employeeData.departmentName}`}</p>
           <p>{`Date of employment: ${this.props.employeeData.dateOfEmployment}`}</p>
           <p>{`Last logged: ${this.props.employeeData.lastLogged}`}</p>
           <p>{`Account active: ${this.props.employeeData.accountActive}`}</p>

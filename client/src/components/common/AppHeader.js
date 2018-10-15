@@ -66,7 +66,7 @@ class AppHeader extends Component {
           <p>{`Email: ${this.props.userData.email}`}</p>
           <p>{`Business phone: ${this.props.userData.businessPhone}`}</p>
           <p>{`Private phone: ${this.props.userData.privatePhone}`}</p>
-          <p>{`Department: ${this.props.userData.department}`}</p>
+          <p>{`Department: ${this.props.userData.departmentName}`}</p>
           <p>{`Date of employment: ${this.props.userData.dateOfEmployment}`}</p>
           <p>{`Last logged: ${this.props.userData.lastLogged}`}</p>
           <p>{`Account active: ${this.props.userData.accountActive}`}</p>

@@ -1,7 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {
+  Modal,
+  Form,
+  Input,
+  Select,
+  InputNumber,
+} from 'antd';
 import { getHeadsNames } from '../../store/actions/user_action';
-import { Modal, Form, Input, Select, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,24 +19,29 @@ const AddDepModal = Form.create()(class extends Component {
       data: [],
       prevHeads: [],
     };
-  };
+  }
 
   static getDerivedStateFromProps(props, state) {
     if (props.heads && props.heads !== state.prevHeads) {
-      let names = props.heads.map((element) => ({ 
-      text: element.firstName + " " + element.lastName,
-      value: element.username,
-    }));
-        return {
-          data: names,
-          prevHeads: props.heads,
-        };
+      const names = props.heads.map(element => ({
+        text: `${element.firstName}  ${element.lastName}`,
+        value: element.username,
+      }));
+      return {
+        data: names,
+        prevHeads: props.heads,
       };
+    }
     return null;
-  };
+  }
 
   render() {
-    const { visible, onCancel, onCreate, form } = this.props;
+    const {
+      visible,
+      onCancel,
+      onCreate,
+      form,
+    } = this.props;
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: {
@@ -65,7 +76,8 @@ const AddDepModal = Form.create()(class extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="City">
+            label="City"
+          >
             {getFieldDecorator('city', {
               rules: [{ required: true, message: 'Please input the city!' }],
             })(
@@ -80,15 +92,16 @@ const AddDepModal = Form.create()(class extends Component {
               rules: [{ type: 'string', required: true, message: 'Please select the head of department!' }],
             })(
               <Select
-              placeholder="Select employee"
+                placeholder="Select employee"
               >
               {this.state.data.map(d => <Option key={d.value}>{d.text}</Option>)}
-              </Select>  
+              </Select>,
             )}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="Minimum Salary">
+            label="Minimum Salary"
+          >
             {getFieldDecorator('minSalary', {
               initialValue: 0,
             })(
@@ -97,7 +110,8 @@ const AddDepModal = Form.create()(class extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="Maximum Salary">
+            label="Maximum Salary"
+          >
             {getFieldDecorator('maxSalary', {
               initialValue: 0,
             })(
@@ -108,10 +122,9 @@ const AddDepModal = Form.create()(class extends Component {
       </Modal>
     );
   }
-  }
-);
+});
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   heads: state.user.headsName,
 });
 

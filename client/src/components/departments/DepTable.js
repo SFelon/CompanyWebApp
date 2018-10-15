@@ -177,26 +177,36 @@ class DepTable extends React.Component {
         title: 'Action',
         key: 'action',
         width: '20%',
-        render: (text, record) => (
-          <div>
-            <Button size={'small'} onClick={() => this.onClickGetEmployeeList(record.id)}>
-              {`View `}
-              <Icon type='solution'/>
-            </Button>
-            <Divider type='vertical' />
-            <Button size={'small'} onClick={() => this.handleEdit(record.id)}>
-              {`Edit `}
-              <Icon type='edit'/>
-            </Button>
-            <Divider type='vertical' />
-            <Popconfirm title='Sure to delete?' onConfirm={() => this.handleDelete(record.id)}>
-              <Button size={'small'}>
-                {`Delete`}
-                <Icon type='delete'/>
+        render: this.props.currentUserRole === 'head' ?
+          ((text, record) => (
+            <div>
+              <Button size={'small'} onClick={() => this.onClickGetEmployeeList(record.id)}>
+                {`View `}
+                <Icon type='solution'/>
               </Button>
-            </Popconfirm>
-          </div>
-        ),
+            </div>
+          ))
+          :
+          ((text, record) => (
+            <div>
+              <Button size={'small'} onClick={() => this.onClickGetEmployeeList(record.id)}>
+                {`View `}
+                <Icon type='solution'/>
+              </Button>
+              <Divider type='vertical' />
+              <Button size={'small'} onClick={() => this.handleEdit(record.id)}>
+                {`Edit `}
+                <Icon type='edit'/>
+              </Button>
+              <Divider type='vertical' />
+              <Popconfirm title='Sure to delete?' onConfirm={() => this.handleDelete(record.id)}>
+                <Button size={'small'}>
+                  {`Delete`}
+                  <Icon type='delete'/>
+                </Button>
+              </Popconfirm>
+            </div>
+          ))
       }
     ];
 
