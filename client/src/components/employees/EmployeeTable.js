@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Table, Icon, Button } from 'antd';
+import {Input, Table, Icon, Button, Skeleton} from 'antd';
+import EmployeeProfileModal from './EmployeeProfileModal';
 import '../../styles/components/EmployeeTable.css'
 
 class EmployeeTable extends React.Component {
@@ -10,75 +11,9 @@ class EmployeeTable extends React.Component {
       sortedInfo: null,
       filteredInfo: null,
       searchText:'',
-      prevDepartments: [],
-      editDepartmentData: {},
-      visible: false,
-      data: [],
-      prevHeads: [],
+      employeeData: null,
+      employeeProfileIsVisible: false,
     };
-  };
-
-  /*
-  static getDerivedStateFromProps(props, state) {
-    if (props.departments && props.departments.length !== state.prevDepartments.length
-      && state.editDepartmentData) {
-      return {
-        prevDepartments: props.departments,
-      }
-    }
-    if (props.heads && props.heads !== state.prevHeads) {
-      let names = props.heads.map((element) => ({
-        text: element.firstName + " " + element.lastName,
-        value: element.username,
-      }));
-      return {
-        data: names,
-        prevHeads: props.heads,
-      };
-    }
-    else {
-      return null;
-    }
-  };*/
-
-  handleEdit(id) {
-    this.setState({
-      editDepartmentData: this.state.prevDepartments.find(element => element.id === id)
-    });
-    this.showModal();
-  };
-
-  showModal() {
-    this.setState({ visible: true });
-    this.props.getHeadsNames();
-  };
-
-  handleCancel = () => {
-    this.setState({ visible: false });
-  };
-
-
-  handleCreate = () => {
-    const form = this.formRef.props.form;
-    form.validateFields((err, values) => {
-      if(values.minSalary === undefined) {
-        values.minSalary = 0;
-      }
-      if (values.maxSalary === undefined) {
-        values.maxSalary = 0;
-      }
-      if (err) {
-        return;
-      }
-      const editDepRequest = Object.assign({}, values);
-      this.props.editDepartment(editDepRequest, this.state.editDepartmentData.id);
-      form.resetFields();
-      this.setState({ visible: false });
-    });
-  };
-
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
   };
 
   handleChange = (pagination, filters, sorter) => {
@@ -98,12 +33,29 @@ class EmployeeTable extends React.Component {
     this.setState({ searchText: '' });
   };
 
-  handleDelete(id) {
-    this.props.deleteDepartment({id});
-  };
 
   onClickGetEmployeeList = (id) => {
     this.props.onClickGetEmployeeList(id);
+  };
+
+  onClickGetEmployeeProfile = (id) => {
+   const employeeData = this.props.employees.find(element => element.id === id);
+   this.setState({
+     employeeData,
+   });
+    this.showModal();
+  };
+
+  showModal() {
+    this.setState({
+      employeeProfileIsVisible: true,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      employeeProfileIsVisible: false,
+    })
   };
 
   render() {
@@ -186,7 +138,7 @@ class EmployeeTable extends React.Component {
         width: '20%',
         render: (text, record) => (
           <div>
-            <Button size={'small'} onClick={() => this.onClickGetEmployeeList(record.id)}>
+            <Button size={'small'} onClick={() => this.onClickGetEmployeeProfile(record.id)}>
               {`View Profile`}
               <Icon type='solution'/>
             </Button>
@@ -194,6 +146,7 @@ class EmployeeTable extends React.Component {
         ),
       }
     ];
+
     return (
       <div>
         <Table
@@ -201,6 +154,11 @@ class EmployeeTable extends React.Component {
           dataSource={this.props.employees}
           rowKey={record => record.id}
           onChange={this.handleChange} size='small'
+        />
+        <EmployeeProfileModal
+          employeeData={this.state.employeeData}
+          visible={this.state.employeeProfileIsVisible}
+          onCancel={this.handleCancel}
         />
       </div>
     );

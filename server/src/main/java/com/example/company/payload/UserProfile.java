@@ -7,6 +7,7 @@ public class UserProfile {
     private long id;
     private String firstName;
     private String lastName;
+    private String username;
     private String email;
     private String privatePhone;
     private String businessPhone;
@@ -18,11 +19,13 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(long id, String firstName, String lastName, String email, String privatePhone,
-                       String businessPhone, String dateOfEmployment, boolean isAccountActive, Date lastLogged, String departmentName) {
+    public UserProfile(long id, String firstName, String lastName, String username, String email, String privatePhone,
+                       String businessPhone, String dateOfEmployment,
+                       boolean isAccountActive, Date lastLogged, String departmentName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.email = email;
         this.privatePhone = privatePhone;
         this.businessPhone = businessPhone;
@@ -31,6 +34,7 @@ public class UserProfile {
         this.lastLogged = lastLogged;
         this.departmentName = departmentName;
     }
+
 
     public long getId() {
         return id;
@@ -54,6 +58,14 @@ public class UserProfile {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

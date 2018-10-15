@@ -70,14 +70,14 @@ class CEO_Dashboard extends Component {
     this.setState({
       departmentTable: false,
     });
-  }
+  };
 
   render() {
     return (
       <div className="ceo-dashboard" style={{padding: '0 50px'}}>
         <Row gutter={16}>
           <Col span={18}>
-            <Skeleton loading={this.props.isLoading}>
+            <Skeleton loading={this.props.isLoadingDepartments || this.props.isLoadingEmployees}>
               {this.state.departmentTable ? (
                 <DepTable onClickGetEmployeeList={this.handleEmployeesListByDepartment}/>
               ) : (
@@ -127,7 +127,8 @@ class CEO_Dashboard extends Component {
 const mapStateToProps = (state) => ({
   departments: state.departments.departments,
   numberOfDepartments: state.departments.departments.length,
-  isLoading: state.departments.isLoadingDepartments,
+  isLoadingDepartments: state.departments.isLoadingDepartments,
+  isLoadingEmployees: state.employees.isLoadingEmployees,
 });
 
 export default withRouter(connect(mapStateToProps, { getDepartmentList, getHeadsNames, addDepartment, getEmployeeList })(CEO_Dashboard));
