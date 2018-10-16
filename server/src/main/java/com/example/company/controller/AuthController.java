@@ -145,6 +145,12 @@ public class AuthController {
         return ResponseEntity.ok(new UsernameAvailability(isAvailable));
     }
 
+    @GetMapping("/checkEmailAvailability")
+    public ResponseEntity<?> checkEmailAvailability(@RequestParam(value = "email") String email) {
+        Boolean isAvailable = !userRepository.existsByEmail(email);
+        return ResponseEntity.ok(new UsernameAvailability(isAvailable));
+    }
+
 }
 
 

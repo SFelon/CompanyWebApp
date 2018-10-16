@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getDepartmentList, addDepartment } from '../../store/actions/department_action';
-import { getHeadsNames } from "../../store/actions/user_action";
+import { getDepartmentList } from '../../store/actions/department_action';
 import { getEmployeeListByDepartment, getAllEmployeeList } from "../../store/actions/employee_action";
 import DepTable from '../../components/departments/DepTable';
 import EmployeeTable from '../../components/employees/EmployeeTable';
@@ -13,7 +12,7 @@ import { Col, Row, Card, Icon, Skeleton, Tooltip} from 'antd';
 class HEAD_Dashboard extends Component {
   state = {
     role: 'head',
-    visible: false,
+    visibleModal: false,
     numberOfDepartments: this.props.numberOfDepartments || 0,
     numberOfEmployees: this.props.numberOfEmployees || 0,
     departmentTable: true,
@@ -34,35 +33,16 @@ class HEAD_Dashboard extends Component {
   };
 
   showModal = () => {
-    this.setState({ visible: true });
+    this.setState({ visibleModal: true });
   };
 
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ visibleModal: false });
   };
 
-  handleCreate = () => {
-    const form = this.formRef.props.form;
-    form.validateFields((err, values) => {
-      if(values.minSalary === undefined) {
-        values.minSalary = 0;
-      }
-      if (values.maxSalary === undefined) {
-        values.maxSalary = 0;
-      }
-      if (err) {
-        return;
-      }
-      const addDepRequest = Object.assign({}, values);
-      this.props.addDepartment(addDepRequest);
-      form.resetFields();
-      this.props.getDepartmentList();
-      this.setState({ visible: false });
-    });
-  };
-
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
+  handleCreate = (employeeRequest) => {
+    this.props.addEmployee(employeeRequest);
+    this.setState({ visibleModal: false });
   };
 
   getDepartments = () => {
@@ -88,7 +68,7 @@ class HEAD_Dashboard extends Component {
 
   render() {
     return (
-      <div className="ceo-dashboard" style={{padding: '0 50px'}}>
+      <div className="head-dashboard" style={{padding: '0 50px'}}>
         <Row gutter={16}>
           <Col span={18}>
             <Skeleton loading={this.props.isLoadingDepartments || this.props.isLoadingEmployees}>
@@ -139,8 +119,7 @@ class HEAD_Dashboard extends Component {
         </Row>
         <div>
           <AddEmployeeModal
-            wrappedComponentRef={this.saveFormRef}
-            visible={this.state.visible}
+            visibleModal={this.state.visibleModal}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
           />
@@ -158,5 +137,4 @@ const mapStateToProps = (state) => ({
   isLoadingEmployees: state.employees.isLoadingEmployees,
 });
 
-export default withRouter(connect(mapStateToProps, { getDepartmentList, getHeadsNames, addDepartment,
-  getEmployeeListByDepartment, getAllEmployeeList })(HEAD_Dashboard));
+export default withRouter(connect(mapStateToProps, { getDepartmentList, getEmployeeListByDepartment, getAllEmployeeList,  })(HEAD_Dashboard));

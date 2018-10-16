@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Input, Table, Icon, Button, Skeleton} from 'antd';
+import { Input, Table, Icon, Button } from 'antd';
 import EmployeeProfileModal from './EmployeeProfileModal';
 import '../../styles/components/EmployeeTable.css'
 
