@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class DepartmentControllerTests {
+    
     @Autowired
     private WebApplicationContext context;
 
@@ -38,11 +39,6 @@ public class DepartmentControllerTests {
     @MockBean
     private DepartmentService departmentService;
 
-    @MockBean
-    private ModelMapper modelMapper;
-
-    @MockBean
-    CustomUserDetailsService customUserDetailsService;
 
     private DepartmentResponse testDepartment1;
     private DepartmentResponse testDepartment2;
@@ -66,7 +62,7 @@ public class DepartmentControllerTests {
                 BigDecimal.valueOf(8000),BigDecimal.valueOf(12000));
     }
 
-    @WithMockUser(username = "seb", password = "password")
+    @WithMockUser(username = "seb2", password = "password")
     @Test
     public void givenDepartments_whenGetDepartments_thenReturnJson() throws Exception {
 /*        //given
@@ -81,11 +77,14 @@ public class DepartmentControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)));*/
 
+        System.out.println(objectMapper.writeValueAsString(new LoginRequest("seb","password")));
+
+
 
         String authzToken = mvc
                 .perform(
                         post("/api/auth/signin")
-                                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(new LoginRequest("seb","password"))))
+                                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(new LoginRequest("seb2","password"))))
                                 .andReturn().getResponse().getContentAsString();
 
         System.out.print(authzToken);

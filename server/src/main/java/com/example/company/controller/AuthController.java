@@ -57,6 +57,9 @@ public class AuthController {
 
         /* An Authentication implementation that is designed for simple presentation of a username and password.
          */
+        System.out.println("w endpoint");
+        System.out.println(loginRequest.toString());
+
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -69,6 +72,9 @@ public class AuthController {
         Interface defining the minimum security information associated with the current thread of execution.
         The security context is stored in a SecurityContextHolder.
         */
+
+        System.out.println("w endpoint po autthentication");
+        System.out.println(loginRequest.toString());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
@@ -108,7 +114,7 @@ public class AuthController {
 
         user.setDepartment(userDepartment);
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_EMPLOYEE)
+        Role userRole = roleRepository.findByName(RoleName.ROLE_CEO)
                 .orElseThrow(() -> new AppException("User Role not set."));
 
         /*
