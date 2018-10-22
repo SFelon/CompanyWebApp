@@ -82,7 +82,7 @@ public class User {
     public User(@NotBlank @Size(max = 25) String firstName, @NotBlank @Size(max = 35) String lastName,
                 @NotBlank @Size(max = 15) String username, @NotBlank @Size(max = 40) @Email String email,
                 @NotBlank @Size(max = 100) String password, @Size(max = 16) String privatePhone,
-                @Size(max = 16) String businessPhone) {
+                @Size(max = 16) String businessPhone, BigDecimal salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -90,7 +90,7 @@ public class User {
         this.password = password;
         this.privatePhone = privatePhone;
         this.businessPhone = businessPhone;
-        this.salary = BigDecimal.valueOf(0.00);
+        this.salary = salary;
         this.dateOfEmployment = new Date();
         this.isAccountActive = true;
         this.lastLogged = new Date();

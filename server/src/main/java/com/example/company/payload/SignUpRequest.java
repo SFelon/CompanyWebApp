@@ -3,6 +3,7 @@ package com.example.company.payload;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 
 public class SignUpRequest {
@@ -32,6 +33,8 @@ public class SignUpRequest {
 
     @Size(max = 16)
     private String businessPhone;
+
+    private BigDecimal salary;
 
     @Size(max = 40)
     private String departmentName;
@@ -90,6 +93,14 @@ public class SignUpRequest {
 
     public void setBusinessPhone(String businessPhone) {
         this.businessPhone = businessPhone;
+    }
+
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
     }
 
     public String getDepartmentName() {

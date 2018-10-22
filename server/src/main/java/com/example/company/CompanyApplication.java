@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class CompanyApplication {
 
-	@Autowired
-	DepartmentService departmentService;
-
 	public static void main(String[] args) {
 		SpringApplication.run(CompanyApplication.class, args);
 	}
