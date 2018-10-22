@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-      id: 7
+      id: 3
       author: sfelon
       changes:
       - createTable:
@@ -123,9 +123,6 @@ databaseChangeLog:
                   name: head_of_department
                   type: varchar(60)
               - column:
-                  name: number_of_employees
-                  type: int
-              - column:
                   name: min_salary
                   type: numeric(6,2)
               - column:
@@ -180,5 +177,13 @@ databaseChangeLog:
               value: ROLE_CEO
           tableName: roles
 
-
+      - insert:
+          columns:
+          - column:
+              name: department_name
+              value: department1
+          - column:
+              name: city
+              value: city
+          tableName: departments
 

@@ -29,8 +29,6 @@ public class Department {
     @Size(max = 60)
     private String headOfDepartment;
 
-    private int numberOfEmployees;
-
     private BigDecimal minSalary;
 
     private BigDecimal maxSalary;
@@ -90,14 +88,6 @@ public class Department {
 
     public void setHeadOfDepartment(String headOfDepartment) {
         this.headOfDepartment = headOfDepartment;
-    }
-
-    public int getNumberOfEmployees() {
-        return numberOfEmployees;
-    }
-
-    public void setNumberOfEmployees(int numberOfEmployees) {
-        this.numberOfEmployees = numberOfEmployees;
     }
 
     public BigDecimal getMinSalary() {

@@ -114,19 +114,19 @@ public class DepartmentService {
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getUsersSalaryData(String id) {
+    public DepartmentInfo getUsersSalaryData(String id) {
 
         Long idLong = Long.parseLong(id);
         if(!departmentRepository.existsById(idLong)) {
-            return new ResponseEntity<>(new ApiResponse(false, "Department with set id does not exist!"),
-                    HttpStatus.BAD_REQUEST);
+            return new DepartmentInfo(Long.valueOf(0), Collections.emptyList(), BigDecimal.valueOf(0),
+                    BigDecimal.valueOf(0));
         }
 
         BigDecimal numberOfUsers = BigDecimal.valueOf(departmentRepository.countUsersByDepartmentId(idLong));
 
         if(numberOfUsers == null || numberOfUsers.longValue() == 0 ) {
-            return ResponseEntity.ok(new DepartmentInfo(Long.valueOf(0), Collections.emptyList(), BigDecimal.valueOf(0),
-                    BigDecimal.valueOf(0)));
+            return new DepartmentInfo(Long.valueOf(0), Collections.emptyList(), BigDecimal.valueOf(0),
+                    BigDecimal.valueOf(0));
         }
 
         List<BigDecimal> listOfSalaries = departmentRepository.getUsersSalaryByDepartment(idLong);
@@ -140,6 +140,6 @@ public class DepartmentService {
                     .divide(BigDecimal.valueOf(2), RoundingMode.CEILING);
         }
 
-        return ResponseEntity.ok(new DepartmentInfo(numberOfUsers.longValue(), listOfSalaries, averageSalary, medianSalary));
+        return new DepartmentInfo(numberOfUsers.longValue(), listOfSalaries, averageSalary, medianSalary);
     }
 }

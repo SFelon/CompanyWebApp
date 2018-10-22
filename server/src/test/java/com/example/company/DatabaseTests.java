@@ -30,7 +30,6 @@ public class DatabaseTests {
 
     @Autowired
     private UserRepository userRepository;
-    
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -78,7 +77,6 @@ public class DatabaseTests {
 
     @Test
     public void whenDepartmentDataWithoutDepartmentName_thenConstraintViolationException() throws Exception {
-
         //expect
         thrown.expect(ConstraintViolationException.class);
 
@@ -98,7 +96,6 @@ public class DatabaseTests {
         //then
         Assertions.assertThat(savedDepartment).hasNoNullFieldsOrProperties();
         Assertions.assertThat(savedDepartment.getUsers().size()).isEqualTo(2);
-
     }
 
     @Test
@@ -132,7 +129,5 @@ public class DatabaseTests {
         Assertions.assertThat(updatedDepartment.getUsers().size()).isEqualTo(2);
         Assertions.assertThat(updatedDepartment.getUsers()).containsExactly(firstUser, thirdUser);
         Assertions.assertThat(updatedDepartment.getUsers().get(1).getFirstName()).isEqualTo("seb_2");
-
     }
-
 }
