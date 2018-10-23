@@ -31,7 +31,6 @@ public class ServiceTests {
 
     @TestConfiguration
     static class DepartmentServiceImplTestContextConfiguration {
-
         @Bean
         public DepartmentService departmentService() {
             return new DepartmentService();
@@ -42,14 +41,11 @@ public class ServiceTests {
     private DepartmentService departmentService;
 
     @MockBean
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     private Department testDepartment;
-
     private User firstUser;
-
     private User secondUser;
-
     private User thirdUser;
 
     @Before
@@ -66,7 +62,6 @@ public class ServiceTests {
         thirdUser = new User ("seb_2", "fel_2", "sebfel_2", "xxx2@xx.xx",
                 "password", "123123123","123123123",BigDecimal.valueOf(2500));
 
-
         testDepartment.addUser(firstUser);
         testDepartment.addUser(secondUser);
         testDepartment.addUser(thirdUser);
@@ -78,7 +73,6 @@ public class ServiceTests {
         Department savedDepartment = entityManager.persistFlushFind(testDepartment);
 
         //when
-
         DepartmentInfo departmentInfo = departmentService.getUsersSalaryData(savedDepartment.getId().toString());
 
         //then

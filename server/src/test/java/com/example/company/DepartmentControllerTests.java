@@ -36,7 +36,6 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class DepartmentControllerTests {
-
     @Autowired
     private WebApplicationContext context;
 
@@ -49,11 +48,9 @@ public class DepartmentControllerTests {
     private DepartmentService departmentService;
 
     private String token;
-
     private DepartmentResponse testDepartment1;
     private DepartmentResponse testDepartment2;
     private DepartmentResponse testDepartment3;
-
 
     @Before
     public void authSetUp() throws Exception {
@@ -85,7 +82,6 @@ public class DepartmentControllerTests {
         testDepartment3 = new DepartmentResponse(Long.valueOf(3),"department3","city3","user3", 10,
                 BigDecimal.valueOf(8000),BigDecimal.valueOf(12000));
     }
-
 
     @Test
     public void givenDepartments_whenGetDepartments_thenReturnJson() throws Exception {

@@ -3,7 +3,6 @@ package com.example.company;
 
 import com.example.company.model.Department;
 import com.example.company.model.User;
-import com.example.company.repository.DepartmentRepository;
 import com.example.company.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -35,11 +34,8 @@ public class DatabaseTests {
     public ExpectedException thrown = ExpectedException.none();
 
     private Department testDepartment;
-
     private User firstUser;
-
     private User secondUser;
-
     private User thirdUser;
 
 

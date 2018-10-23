@@ -24,8 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     allows users to log in using either username or email.
      */
 
-
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String usernameOrEmail)
@@ -37,7 +35,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return UserPrincipal.create(user);
     }
-
 
     // method loadUserById() is used by JWTAuthenticationFilter
 
