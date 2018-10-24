@@ -3,6 +3,8 @@ package com.example.company.security;
 import com.example.company.exception.ResourceNotFoundException;
 import com.example.company.model.User;
 import com.example.company.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +19,13 @@ import java.util.Date;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /*loadUserByUsername() is used by Spring security. findByUsernameOrEmail method
     allows users to log in using either username or email.

@@ -27,11 +27,15 @@ import java.util.stream.Collectors;
 @Service
 public class DepartmentService {
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final DepartmentRepository departmentRepository;
+    private final ModelMapper modelMapper;
+
+    public DepartmentService(DepartmentRepository departmentRepository, ModelMapper modelMapper) {
+        this.departmentRepository = departmentRepository;
+        this.modelMapper = modelMapper;
+    }
 
     private DepartmentResponse convertDepartmentToDto(Department department) {
         DepartmentResponse departmentResponse = modelMapper.map(department, DepartmentResponse.class);
@@ -42,15 +46,8 @@ public class DepartmentService {
         return new Sort(Sort.Direction.ASC, "departmentName");
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
-
-
     public List<DepartmentResponse> getAllDepartments() {
         List<Department> departments = departmentRepository.findAll(sortByNameAsc());
-
-        if(departments.size() == 0) {
-            return new ArrayList<>(Collections.emptyList());
-        }
 
         return departments.stream().map(department -> convertDepartmentToDto(department)).collect(Collectors.toList());
     }
@@ -74,9 +71,8 @@ public class DepartmentService {
         return ResponseEntity.created(location).body(new ApiResponse(true, "Department added successfully"));
     }
 
-    public ResponseEntity<?> updateDepartment(String id, DepartmentRequest departmentRequest) {
-        Long idLong = Long.parseLong(id);
-        if(!departmentRepository.existsById(idLong)) {
+    public ResponseEntity<?> updateDepartment(Long id, DepartmentRequest departmentRequest) {
+        if(!departmentRepository.existsById(id)) {
             return new ResponseEntity<>(new ApiResponse(false, "Department with set id does not exist!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -85,51 +81,49 @@ public class DepartmentService {
             departmentRepository.save(department);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(false, "Could not update department in database!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+                    HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(new ApiResponse(true, "Department deleted successfully!"),
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<?> deleteDepartment(String id) {
-        Long idLong = Long.parseLong(id);
-        if(!departmentRepository.existsById(idLong)) {
+    public ResponseEntity<?> deleteDepartment(Long id) {
+        if(!departmentRepository.existsById(id)) {
             return new ResponseEntity<>(new ApiResponse(false, "Department with set id does not exist!"),
                     HttpStatus.BAD_REQUEST);
-        } else if(departmentRepository.countUsersByDepartmentId(idLong) > 0) {
-            System.out.println(departmentRepository.countUsersByDepartmentId(idLong));
+        } else if(departmentRepository.countUsersByDepartmentId(id) > 0) {
             return new ResponseEntity<>(new ApiResponse(false, "Cannot delete department with saved employees!"),
                     HttpStatus.BAD_REQUEST);
         }
 
+        //TODO
         try {
-            departmentRepository.deleteById(idLong);
+            departmentRepository.deleteById(id);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(false, "Could not delete department from database!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+                    HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(new ApiResponse(true, "Department deleted successfully!"),
                 HttpStatus.OK);
     }
 
-    public DepartmentInfo getUsersSalaryData(String id) {
+    public DepartmentInfo getUsersSalaryData(Long id) {
 
-        Long idLong = Long.parseLong(id);
-        if(!departmentRepository.existsById(idLong)) {
-            return new DepartmentInfo(Long.valueOf(0), Collections.emptyList(), BigDecimal.valueOf(0),
+        if(!departmentRepository.existsById(id)) {
+            return new DepartmentInfo(0L, Collections.emptyList(), BigDecimal.valueOf(0),
                     BigDecimal.valueOf(0));
         }
 
-        BigDecimal numberOfUsers = BigDecimal.valueOf(departmentRepository.countUsersByDepartmentId(idLong));
+        BigDecimal numberOfUsers = BigDecimal.valueOf(departmentRepository.countUsersByDepartmentId(id));
 
         if(numberOfUsers == null || numberOfUsers.longValue() == 0 ) {
-            return new DepartmentInfo(Long.valueOf(0), Collections.emptyList(), BigDecimal.valueOf(0),
+            return new DepartmentInfo(0L, Collections.emptyList(), BigDecimal.valueOf(0),
                     BigDecimal.valueOf(0));
         }
 
-        List<BigDecimal> listOfSalaries = departmentRepository.getUsersSalaryByDepartment(idLong);
+        List<BigDecimal> listOfSalaries = departmentRepository.getUsersSalaryByDepartment(id);
         BigDecimal sumOfSalaries = listOfSalaries.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal averageSalary = sumOfSalaries.divide(numberOfUsers, RoundingMode.CEILING);
 

@@ -11,7 +11,8 @@ import com.example.company.repository.RoleRepository;
 import com.example.company.repository.UserRepository;
 import com.example.company.security.JwtTokenProvider;
 import com.example.company.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,26 +32,27 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    @Autowired
-    UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final DepartmentRepository departmentRepository;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
 
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    DepartmentRepository departmentRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtTokenProvider tokenProvider;
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
+                          RoleRepository roleRepository, DepartmentRepository departmentRepository, UserService userService,
+                          PasswordEncoder passwordEncoder, JwtTokenProvider tokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.departmentRepository = departmentRepository;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -80,12 +82,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+            return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+            return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -149,7 +151,6 @@ public class AuthController {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return ResponseEntity.ok(new UsernameAvailability(isAvailable));
     }
-
 }
 
 

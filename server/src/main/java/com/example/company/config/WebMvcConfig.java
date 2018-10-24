@@ -1,5 +1,7 @@
 package com.example.company.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -11,6 +13,8 @@ Enabling cross origin requests globally
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
     private final long MAX_AGE_SECS = 3600;
 

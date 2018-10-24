@@ -1,10 +1,15 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class DepartmentRequest {
+
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentRequest.class);
 
     @NotBlank
     @Size(min = 3, max = 40)
@@ -22,11 +27,9 @@ public class DepartmentRequest {
     private BigDecimal maxSalary;
 
     public DepartmentRequest() {
-
     }
 
-    public DepartmentRequest(@NotBlank @Size(min = 3, max = 40) String departmentName, @NotBlank @Size(min = 3, max = 30)
-            String city, @Size(max = 60) String headOfDepartment, BigDecimal minSalary, BigDecimal maxSalary) {
+    public DepartmentRequest(String departmentName, String city, String headOfDepartment, BigDecimal minSalary, BigDecimal maxSalary) {
         this.departmentName = departmentName;
         this.city = city;
         this.headOfDepartment = headOfDepartment;

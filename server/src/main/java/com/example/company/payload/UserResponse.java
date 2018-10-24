@@ -1,10 +1,15 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
 public class UserResponse {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserResponse.class);
+
     private Long id;
     private String username;
     private Collection<? extends GrantedAuthority> authorities;

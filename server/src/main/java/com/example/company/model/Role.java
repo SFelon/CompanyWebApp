@@ -1,12 +1,17 @@
 package com.example.company.model;
 
 import org.hibernate.annotations.NaturalId;
-import javax.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.persistence.*;
 
 @Entity
 @Table(name="roles")
 public class Role {
+
+    private static final Logger logger = LoggerFactory.getLogger(Role.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,5 +43,4 @@ public class Role {
     public void setName(RoleName name) {
         this.name = name;
     }
-
 }

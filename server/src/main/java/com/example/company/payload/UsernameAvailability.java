@@ -1,6 +1,12 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UsernameAvailability {
+
+    private static final Logger logger = LoggerFactory.getLogger(UsernameAvailability.class);
+
     private Boolean available;
 
     public UsernameAvailability(Boolean available) {

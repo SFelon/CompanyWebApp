@@ -1,8 +1,8 @@
 package com.example.company.controller;
 
-import com.example.company.payload.UserProfile;
 import com.example.company.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/departments")
 public class EmployeeController {
 
-    @Autowired
-    EmployeeService employeeService;
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/employees")
     @PreAuthorize("hasAnyRole('ROLE_CEO','ROLE_HEAD')")
@@ -28,5 +33,4 @@ public class EmployeeController {
     public ResponseEntity<?> getEmployeesByDepartment(@PathVariable("id") String id) {
         return employeeService.getEmployeesByDepartment(id);
     }
-
 }

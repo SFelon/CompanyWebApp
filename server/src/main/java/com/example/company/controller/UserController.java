@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     ModelMapper modelMapper;
 
@@ -42,8 +44,6 @@ public class UserController {
         HeadsNameResponse headNames = modelMapper.map(user, HeadsNameResponse.class);
         return headNames;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_CEO','ROLE_HEAD','ROLE_EMPLOYEE')")

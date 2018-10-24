@@ -14,7 +14,6 @@ and validating the JWT sent in the Authorization header of the requests.
 The utility class reads the JWT secret and expiration time from properties.
  */
 
-
 @Component
 public class JwtTokenProvider {
 

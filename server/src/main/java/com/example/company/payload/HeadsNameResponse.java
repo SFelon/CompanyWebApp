@@ -1,12 +1,24 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.validation.constraints.NotBlank;
+
 public class HeadsNameResponse {
+
+    private static final Logger logger = LoggerFactory.getLogger(HeadsNameResponse.class);
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
     private String username;
 
     public HeadsNameResponse() {
-
     }
 
     public String getFirstName() {

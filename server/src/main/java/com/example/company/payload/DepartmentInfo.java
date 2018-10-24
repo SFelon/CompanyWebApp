@@ -1,11 +1,15 @@
 package com.example.company.payload;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 public class DepartmentInfo {
 
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentInfo.class);
 
     private Long numberOfUsers;
     private List<BigDecimal> usersSalaries;

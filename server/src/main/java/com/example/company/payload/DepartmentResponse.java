@@ -1,21 +1,35 @@
 package com.example.company.payload;
 
-import com.example.company.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class DepartmentResponse {
+
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentRequest.class);
+
+    @NotBlank
     private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 40)
     private String departmentName;
+
+    @NotBlank
+    @Size(min = 3, max = 30)
     private String city;
+
+    @Size(max = 60)
     private String headOfDepartment;
+
     private int numberOfEmployees;
     private BigDecimal minSalary;
     private BigDecimal maxSalary;
 
     public DepartmentResponse() {
-
     }
 
     public DepartmentResponse(Long id, String departmentName, String city, String headOfDepartment,

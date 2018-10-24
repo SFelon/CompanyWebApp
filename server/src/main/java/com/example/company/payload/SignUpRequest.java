@@ -1,5 +1,8 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -7,6 +10,9 @@ import java.math.BigDecimal;
 
 
 public class SignUpRequest {
+
+    private static final Logger logger = LoggerFactory.getLogger(SignUpRequest.class);
+
     @NotBlank
     @Size(min = 3, max = 25)
     private String firstName;

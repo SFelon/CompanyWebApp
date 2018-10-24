@@ -2,6 +2,8 @@ package com.example.company.security;
 
 import com.example.company.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,9 @@ authentication and authorization.
  */
 
 public class UserPrincipal implements UserDetails {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserPrincipal.class);
+
     private Long id;
 
     private String username;
@@ -54,7 +59,6 @@ public class UserPrincipal implements UserDetails {
     public Long getId() {
         return id;
     }
-
 
     public String getEmail() {
         return email;

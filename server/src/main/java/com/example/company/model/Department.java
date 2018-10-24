@@ -2,6 +2,8 @@ package com.example.company.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "departments")
 public class Department {
+
+    private static final Logger logger = LoggerFactory.getLogger(Department.class);
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -33,11 +37,10 @@ public class Department {
 
     private BigDecimal maxSalary;
 
-
     @OneToMany(
             mappedBy = "department",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     @Fetch(value = FetchMode.SELECT)
@@ -45,18 +48,15 @@ public class Department {
 
 
     public Department() {
-
     }
 
-    public Department(@NotBlank @Size(max = 40) String departmentName, @NotBlank @Size(max = 30) String city,
-                      @Size(max = 60) String headOfDepartment, BigDecimal minSalary, BigDecimal maxSalary) {
+    public Department(String departmentName, String city, String headOfDepartment, BigDecimal minSalary, BigDecimal maxSalary) {
         this.departmentName = departmentName;
         this.city = city;
         this.headOfDepartment = headOfDepartment;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
     }
-
 
     public Long getId() {
         return id;
@@ -123,5 +123,4 @@ public class Department {
         users.remove(user);
         user.setDepartment(null);
     }
-
 }

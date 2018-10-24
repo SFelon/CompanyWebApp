@@ -1,16 +1,43 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class UserProfile {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserProfile.class);
+
+    @NotBlank
     private long id;
+
+    @NotBlank
+    @Size(max = 25)
     private String firstName;
+
+    @NotBlank
+    @Size(max = 35)
     private String lastName;
+
+    @NotBlank
+    @Size(max = 15)
     private String username;
+
+    @NotBlank
+    @Size(max = 40)
+    @Email
     private String email;
+
+    @Size(max = 16)
     private String privatePhone;
+
+    @Size(max = 16)
     private String businessPhone;
+
     private String dateOfEmployment;
     private boolean isAccountActive;
     private Date lastLogged;
@@ -34,7 +61,6 @@ public class UserProfile {
         this.lastLogged = lastLogged;
         this.departmentName = departmentName;
     }
-
 
     public long getId() {
         return id;

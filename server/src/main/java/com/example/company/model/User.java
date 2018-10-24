@@ -1,6 +1,8 @@
 package com.example.company.model;
 
 import org.hibernate.annotations.NaturalId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -22,6 +24,9 @@ import java.util.Set;
         })
 })
 public class User {
+
+    private static final Logger logger = LoggerFactory.getLogger(User.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,7 +67,6 @@ public class User {
 
     private Date lastLogged;
 
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -70,19 +74,15 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
 
-
     public User() {
-
     }
 
-    public User(@NotBlank @Size(max = 25) String firstName, @NotBlank @Size(max = 35) String lastName,
-                @NotBlank @Size(max = 15) String username, @NotBlank @Size(max = 40) @Email String email,
-                @NotBlank @Size(max = 100) String password, @Size(max = 16) String privatePhone,
-                @Size(max = 16) String businessPhone, BigDecimal salary) {
+    public User(String firstName, String lastName, String username, String email, String password, String privatePhone,
+                String businessPhone, BigDecimal salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -143,7 +143,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public String getPrivatePhone() {
         return privatePhone;

@@ -1,8 +1,14 @@
 package com.example.company.payload;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginRequest.class);
+
     @NotBlank
     private String usernameOrEmail;
 
@@ -12,7 +18,7 @@ public class LoginRequest {
     public LoginRequest() {
     }
 
-    public LoginRequest(@NotBlank String usernameOrEmail, @NotBlank String password) {
+    public LoginRequest(String usernameOrEmail, String password) {
         this.usernameOrEmail = usernameOrEmail;
         this.password = password;
     }

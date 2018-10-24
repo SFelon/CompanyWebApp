@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
 
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
+
     @Autowired
     DepartmentRepository departmentRepository;
 
@@ -34,8 +36,6 @@ public class EmployeeService {
 
     @Autowired
     private ModelMapper modelMapper;
-
-
 
 
     private static String formatDateToString(Object v) {
@@ -62,10 +62,6 @@ public class EmployeeService {
 
         return modelMapper.map(user, UserProfile.class);
     }
-
-
-    private static final Logger logger = LoggerFactory.getLogger(DepartmentService.class);
-
 
     public ResponseEntity<?> convertUserToUserDTO(User user) {
         return ResponseEntity.ok(convertUserToDto(user));

@@ -16,11 +16,11 @@ the implementation for its commence() method. This method is called whenever an 
 is thrown due to an unauthenticated user trying to access a resource that requires authentication.
  */
 
-
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
+
     @Override
     public void commence(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse,
