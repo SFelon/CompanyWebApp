@@ -1,5 +1,5 @@
 # CompanyWebApp
-Web application for company management - intern project. Spring boot, Postgres, React + AntDesign.
+Web application for company management - intern project. Spring boot, Postgres, Liquibase, React-Redux + AntDesign.
 
 Screenshots:
 
