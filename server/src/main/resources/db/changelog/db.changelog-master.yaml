@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-      id: 3
+      id: 1
       author: sfelon
       changes:
       - createTable:
@@ -181,9 +181,9 @@ databaseChangeLog:
           columns:
           - column:
               name: department_name
-              value: department1
+              value: Headquarters
           - column:
               name: city
-              value: city
+              value: Rzeszow
           tableName: departments
 

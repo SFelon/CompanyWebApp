@@ -3,6 +3,7 @@ package com.example.company;
 import com.example.company.model.Department;
 import com.example.company.model.User;
 import com.example.company.payload.DepartmentInfo;
+import com.example.company.repository.DepartmentRepository;
 import com.example.company.service.DepartmentService;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -26,24 +28,12 @@ import java.math.RoundingMode;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ServiceTests {
-    /*
-
-    @Autowired
+    //TODO
+    /*@Autowired
     private TestEntityManager entityManager;
-
-    @TestConfiguration
-    static class DepartmentServiceImplTestContextConfiguration {
-        @Bean
-        public DepartmentService departmentService() {
-            return new DepartmentService();
-        }
-    }
 
     @Autowired
     private DepartmentService departmentService;
-
-    @MockBean
-    private ModelMapper modelMapper;
 
     private Department testDepartment;
     private User firstUser;
@@ -82,7 +72,6 @@ public class ServiceTests {
                 .hasFieldOrPropertyWithValue("numberOfUsers", Long.valueOf(3))
                 .hasFieldOrPropertyWithValue("averageSalary", BigDecimal.valueOf(4000).setScale(2, RoundingMode.CEILING))
                 .hasFieldOrPropertyWithValue("medianSalary", BigDecimal.valueOf(3500).setScale(2, RoundingMode.CEILING));
-    }
-    */
+    }*/
 }
 

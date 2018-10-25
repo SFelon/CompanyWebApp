@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,16 +32,18 @@ inside JWT claims and create the UserDetails object by parsing those claims from
 avoid the database hit.
  */
 
-
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtTokenProvider tokenProvider;
-
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
+    private final JwtTokenProvider tokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, CustomUserDetailsService customUserDetailsService) {
+        this.tokenProvider = tokenProvider;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
